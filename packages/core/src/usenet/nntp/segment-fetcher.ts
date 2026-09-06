@@ -623,11 +623,16 @@ export class LocalSegmentFetcher implements SegmentFetcher {
           // ask the rest before giving up.
           undecodable.set(pool.id, err);
           if (nzbHash) this.affinity.record(nzbHash, pool.id, true, 'body');
+          this.stats.record({
+            type: 'segment_undecodable',
+            providerId: pool.id,
+          });
           logger.debug(
             {
               provider: pool.label,
               messageId: segment.messageId,
               code: err.code,
+              reason: err.message,
             },
             'segment undecodable on provider'
           );

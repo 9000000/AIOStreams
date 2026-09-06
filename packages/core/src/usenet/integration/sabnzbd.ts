@@ -640,7 +640,8 @@ async function buildServerStats(): Promise<SabnzbdResult> {
       const server = (servers[key] ??= { daily: {} });
       server[window] = r.bytes;
       if (window === 'total') {
-        server.articles_tried = r.articles + r.errors + r.missing;
+        server.articles_tried =
+          r.articles + r.errors + r.missing + r.undecodable;
         server.articles_success = r.articles;
       }
     }
